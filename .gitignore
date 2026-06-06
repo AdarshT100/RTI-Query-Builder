@@ -19,3 +19,5 @@ dist/
 
 #markdown files
 *.md
+
+isolation test scripts/
