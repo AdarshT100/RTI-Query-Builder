@@ -2,8 +2,8 @@ import os
 from datetime import datetime, timedelta
 from fastapi import HTTPException
 
-_LIMIT_PER_HOUR: int = int(os.getenv("RATE_LIMIT_PER_HOUR", "3"))
-_LIMIT_PER_DAY: int = int(os.getenv("RATE_LIMIT_PER_DAY", "5"))
+_LIMIT_PER_HOUR: int = int(os.getenv("RATE_LIMIT_PER_HOUR") or "3")
+_LIMIT_PER_DAY: int = int(os.getenv("RATE_LIMIT_PER_DAY") or "5")
 
 _store : dict [str, list[datetime]] = {}
 
