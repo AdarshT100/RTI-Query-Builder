@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Environment variables
+.env
+
+# macOS
+.DS_Store
+
+# VS Code (optional)
+.vscode/
+
+node_modules/
+dist/
+
+#markdown files
+*.md
