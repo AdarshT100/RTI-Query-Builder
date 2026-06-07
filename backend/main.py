@@ -77,3 +77,5 @@ async def generate(payload: GenerateRequest, request:Request):
     except ValueError:
         raise HTTPException(status_code=500, detail="Failed to parse AI response")
     return result
+
+
