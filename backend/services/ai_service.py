@@ -157,15 +157,18 @@ instructions. No preamble, no explanation, no markdown fences.
 
 def run_stage_one(complaint:str) -> dict:
     user_prompt = _STAGE_1_PROMPT_TEMPLATE.format(complaint=complaint)
-    raw = _call_model(_SYSTEM_PROMPT, user_prompt)
+    try:
+        raw = _call_model(_SYSTEM_PROMPT, user_prompt)
+    except Exception as e:
+        raise ValueError(f"LLM call failed: {e}") from e
 
     cleaned = _strip_json_fences(raw)
     try:
         return json.loads(cleaned)
-    except json.JSONDecoderError as e:
+    except json.JSONDecodeError as e:
         raise ValueError(
             f"Stage 1 response was not valid JSON."
-            F"Parse error: {e}. Raw response: {raw!r}"
+            f"Parse error: {e}. Raw response: {raw!r}"
         )
     
 def run_stage_two(complaint: str, answers: dict)-> dict:
@@ -174,12 +177,15 @@ def run_stage_two(complaint: str, answers: dict)-> dict:
         complaint=complaint,
         resolved_context=resolved_context,
     )
-    raw = _call_model(_SYSTEM_PROMPT, user_prompt)
+    try:
+        raw = _call_model(_SYSTEM_PROMPT, user_prompt)
+    except Exception as e:
+        raise ValueError(f"LLM call failed: {e}") from e
 
     cleaned = _strip_json_fences(raw)
     try:
         return json.loads(cleaned)
-    except json.JSONDecoderError as e:
+    except json.JSONDecodeError as e:
         raise ValueError(
             f"Stage 2 response was not valid JSON."
             f"Parse error: {e}. Raw response: {raw!r}"
