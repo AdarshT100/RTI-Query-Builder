@@ -1,6 +1,7 @@
 import { useRTIFlow } from "./hooks/useRTIFlow";
 import Spinner from "./components/Spinner";
 import ErrorBanner from "./components/ErrorBanner";
+import ComplaintInput from "./components/ComplaintInput";
 import "./App.css";
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
     error,
     handleReset,
     handleErrorDismiss,
+    handleComplaintSubmit
   } = useRTIFlow();
 
   return (
@@ -35,7 +37,7 @@ export default function App() {
         ) : (
           <>
             {stage === "input" && (
-              <div className="stage-placeholder">Stage: Complaint Input</div>
+              <ComplaintInput onSubmit={handleComplaintSubmit}/>
             )}
             {stage === "questions" && (
               <div className="stage-placeholder">Stage: Clarifying Questions</div>

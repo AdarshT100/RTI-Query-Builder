@@ -31,16 +31,46 @@ export function useRTIFlow(){
         setError(null);
     }
 
-    async function handleComplaintSubmit(complaint, captcha_token){
-        console.log("[stub] handleComplaintSubmit called", {
-            complaint,
-            captcha_token,
-        });
+    async function handleComplaintSubmit(submittedComplaint, captcha_token){
         setIsLoading(true);
-        setTimeout(() => setIsLoading(false), 500);
+        setError(null);
+        setComplaint(submittedComplaint);
+
+        try{
+            const data = await analyzeComplaint(submittedComplaint, captcha_token);
+            console.log("[stage1 response]", data);
+
+            if(data.non_rti_able){
+                setNonRTIableData({
+                    variant: "non_rti_able",
+                    reason:data.reason,
+                    alternative: data.alternative ?? null,
+                });
+                setStage("non_rti_able");
+                return;
+            }
+
+            if(data.insufficient_context){
+                setNonRTIableData({
+                    variant: "insufficient_context",
+                    prompt: data.prompt,
+                });
+                setStage("non_rti_able");
+                return;
+            }
+            setQuestions(data.questions ?? []);
+            setLanguageNote(data.languageNote ?? null);
+            setStage("questions");
+        }
+        catch (err){
+            setError(mapError(err));
+        }
+        finally{
+            setIsLoading(false);
+        }
     }
 
-    async function handleAnswerSubmit(answers){
+    async function handleAnswersSubmit(answers){
         console.log("[stub] handleAnswerSubmit called" , {answers});
         setIsLoading(true);
         setTimeout(() => setIsLoading(false),500);
@@ -59,7 +89,7 @@ export function useRTIFlow(){
         error,
         handleReset,
         handleComplaintSubmit,
-        handleAnswerSubmit,
+        handleAnswersSubmit,
         handleErrorDismiss
     };
 }

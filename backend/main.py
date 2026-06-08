@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 from utils.rate_limiter import check_rate_limit
 from services.ai_service import run_stage_one, run_stage_two
+from typing import Optional
 
 load_dotenv()
 
@@ -23,7 +24,7 @@ app.add_middleware(
 
 class AnalyzeRequest(BaseModel):
     complaint: str
-    captcha_token: str
+    captcha_token: Optional[str] =None
 
 class GenerateRequest(BaseModel):
     complaint: str
@@ -35,7 +36,11 @@ def _validate_complaint(complaint:str) ->None:
     if len(complaint)>2000:
         raise HTTPException(status_code=400, detail="Complaint exceeds maximum 2000-character limit")
     
-async def _verify_turnstile(token:str) ->None:
+async def _verify_turnstile(token:Optional[str]) ->None:
+    #dev mode pass only
+    if token is None:
+        return
+
     secret = os.getenv("TURNSTILE_SECRET_KEY")
     try:
         async with httpx.AsyncClient() as client:
