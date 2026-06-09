@@ -2,16 +2,20 @@ import { useRTIFlow } from "./hooks/useRTIFlow";
 import Spinner from "./components/Spinner";
 import ErrorBanner from "./components/ErrorBanner";
 import ComplaintInput from "./components/ComplaintInput";
+import ClarifyingQuestions from "./components/ClarifyingQuestions";
 import "./App.css";
 
 export default function App() {
   const {
     stage,
+    questions,
+    languageNote,
     isLoading,
     error,
     handleReset,
     handleErrorDismiss,
-    handleComplaintSubmit
+    handleComplaintSubmit,
+    handleAnswersSubmit
   } = useRTIFlow();
 
   return (
@@ -40,7 +44,11 @@ export default function App() {
               <ComplaintInput onSubmit={handleComplaintSubmit}/>
             )}
             {stage === "questions" && (
-              <div className="stage-placeholder">Stage: Clarifying Questions</div>
+              <ClarifyingQuestions
+                questions={questions}
+                languageNote={languageNote}
+                onAnswersSubmit={handleAnswersSubmit}
+              />
             )}
             {stage === "draft" && (
               <div className="stage-placeholder">Stage: RTI Draft</div>

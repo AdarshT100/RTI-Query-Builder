@@ -1,0 +1,121 @@
+    .clarifying-questions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    }
+
+    .clarifying-questions__language-note {
+    padding: var(--space-md);
+    background-color: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+    }
+
+    .clarifying-questions__heading {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+    }
+
+    .clarifying-questions__subheading {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: calc(-1 * var(--space-sm));
+    }
+
+    .clarifying-questions__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    }
+
+    .clarifying-questions__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    }
+
+    .clarifying-questions__label {
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.4;
+    }
+
+    .clarifying-questions__input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    transition: border-color 0.15s ease;
+    }
+
+    .clarifying-questions__input:focus {
+    outline: none;
+    border-color: var(--accent);
+    }
+
+    .clarifying-questions__input--date {
+    width: auto;
+    }
+
+    .clarifying-questions__date-range {
+    display: flex;
+    gap: var(--space-lg);
+    flex-wrap: wrap;
+    }
+
+    .clarifying-questions__date-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    }
+
+    .clarifying-questions__date-label {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    }
+
+    .clarifying-questions__submit {
+    align-self: flex-start;
+    background-color: var(--accent);
+    color: var(--surface);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    padding: var(--space-sm) var(--space-xl);
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+    }
+
+    .clarifying-questions__submit:hover:not(:disabled) {
+    opacity: 0.88;
+    }
+
+    .clarifying-questions__submit:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    }
+
+    .clarifying-questions__submit:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    }
