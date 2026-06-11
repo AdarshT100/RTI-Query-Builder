@@ -3,6 +3,7 @@ import Spinner from "./components/Spinner";
 import ErrorBanner from "./components/ErrorBanner";
 import ComplaintInput from "./components/ComplaintInput";
 import ClarifyingQuestions from "./components/ClarifyingQuestions";
+import RTIDraft from "./components/RTIDraft";
 import "./App.css";
 
 export default function App() {
@@ -10,13 +11,20 @@ export default function App() {
     stage,
     questions,
     languageNote,
+    rtiDraft,
     isLoading,
+    loadingStage,
     error,
     handleReset,
     handleErrorDismiss,
     handleComplaintSubmit,
     handleAnswersSubmit
   } = useRTIFlow();
+
+  console.log("[loading]", { isLoading, loadingStage });
+
+  const showSkeleton = isLoading && loadingStage==="generating";
+  const showSpinner = isLoading && loadingStage==="analyzing";
 
   return (
     <div className="app">
@@ -32,13 +40,15 @@ export default function App() {
           <ErrorBanner message={error} onDismiss={handleErrorDismiss} />
         )}
 
-        {isLoading ? (
-          <Spinner message={
-            stage === "input" || stage === "questions"
-              ? "Analyzing your complaint…"
-              : "Generating your RTI application…"
-          } />
-        ) : (
+        {showSpinner && (
+          <Spinner message = "Analyzing your Complaint..." />
+        )}
+
+        {showSkeleton &&(
+          <RTIDraft skeleton />
+        )}
+
+        {!isLoading &&(
           <>
             {stage === "input" && (
               <ComplaintInput onSubmit={handleComplaintSubmit}/>
@@ -51,7 +61,7 @@ export default function App() {
               />
             )}
             {stage === "draft" && (
-              <div className="stage-placeholder">Stage: RTI Draft</div>
+              <RTIDraft rtiDraft={rtiDraft}/>
             )}
             {stage === "non_rti_able" && (
               <div className="stage-placeholder">Stage: Non-RTI-able Exit</div>

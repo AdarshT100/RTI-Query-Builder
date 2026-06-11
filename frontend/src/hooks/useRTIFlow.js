@@ -9,6 +9,7 @@
     const [rtiDraft, setRTIDraft] = useState(null);
     const [nonRTIableData, setNonRTIableData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [loadingStage, setLoadingStage] = useState(null);
     const [error, setError] = useState(null);
 
     function mapError(err) {
@@ -27,10 +28,12 @@
         setRTIDraft(null);
         setNonRTIableData(null);
         setIsLoading(false);
+        setLoadingStage(null);
         setError(null);
     }
 
     async function _runStageTwo(submittedComplaint, answers) {
+        setLoadingStage("generating");
         try {
         const data = await generateRTI(submittedComplaint, answers);
         console.log("[stage2 response]", data);
@@ -40,11 +43,13 @@
         setError(mapError(err));
         } finally {
         setIsLoading(false);
+        setLoadingStage(null);
         }
     }
 
     async function handleComplaintSubmit(submittedComplaint, captcha_token) {
         setIsLoading(true);
+        setLoadingStage("analyzing");
         setError(null);
         setComplaint(submittedComplaint);
 
@@ -59,6 +64,8 @@
             alternative: data.alternative ?? null,
             });
             setStage("non_rti_able");
+            setIsLoading(false);
+            setLoadingStage(null);
             return;
         }
 
@@ -68,6 +75,8 @@
             prompt: data.prompt,
             });
             setStage("non_rti_able");
+            setIsLoading(false);
+            setLoadingStage(null);
             return;
         }
 
@@ -83,10 +92,12 @@
         setQuestions(qs);
         setLanguageNote(note);
         setStage("questions");
+        setIsLoading(false);
+        setLoadingStage(null);
         } catch (err) {
         setError(mapError(err));
-        } finally {
         setIsLoading(false);
+        setLoadingStage(null);
         }
     }
 
@@ -108,6 +119,7 @@
         rtiDraft,
         nonRTIableData,
         isLoading,
+        loadingStage,
         error,
         handleReset,
         handleComplaintSubmit,
