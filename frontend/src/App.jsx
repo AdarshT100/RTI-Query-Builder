@@ -4,6 +4,7 @@ import ErrorBanner from "./components/ErrorBanner";
 import ComplaintInput from "./components/ComplaintInput";
 import ClarifyingQuestions from "./components/ClarifyingQuestions";
 import RTIDraft from "./components/RTIDraft";
+import NonRTIable from "./components/NonRTIable";
 import "./App.css";
 
 export default function App() {
@@ -12,6 +13,7 @@ export default function App() {
     questions,
     languageNote,
     rtiDraft,
+    nonRTIableData,
     isLoading,
     loadingStage,
     error,
@@ -63,8 +65,22 @@ export default function App() {
             {stage === "draft" && (
               <RTIDraft rtiDraft={rtiDraft}/>
             )}
-            {stage === "non_rti_able" && (
-              <div className="stage-placeholder">Stage: Non-RTI-able Exit</div>
+            {stage === "non_rti_able" && nonRTIableData && (
+              <NonRTIable
+                variant={nonRTIableData.variant}
+                heading={
+                  nonRTIableData.variant === "non_rti_able"
+                    ? "This complaint may not be addressable through RTI"
+                    : "We need a bit more detail"
+                }
+                body={
+                  nonRTIableData.variant === "non_rti_able"
+                    ? nonRTIableData.reason
+                    : nonRTIableData.prompt
+                }
+                alternative={nonRTIableData.alternative ?? null}
+                onReset={handleReset}
+              />
             )}
           </>
         )}
