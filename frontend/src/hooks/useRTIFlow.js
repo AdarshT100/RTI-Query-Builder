@@ -36,7 +36,7 @@
         setLoadingStage("generating");
         try {
         const data = await generateRTI(submittedComplaint, answers);
-        console.log("[stage2 response]", data);
+        // console.log("[stage2 response]", data);
         setRTIDraft(data);
         setStage("draft");
         } catch (err) {
@@ -55,7 +55,7 @@
 
         try {
         const data = await analyzeComplaint(submittedComplaint, captcha_token);
-        console.log("[stage1 response]", data);
+        // console.log("[stage1 response]", data);
 
         if (data.non_rti_able) {
             setNonRTIableData({

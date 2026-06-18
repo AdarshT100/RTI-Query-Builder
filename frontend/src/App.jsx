@@ -23,7 +23,7 @@ export default function App() {
     handleAnswersSubmit
   } = useRTIFlow();
 
-  console.log("[loading]", { isLoading, loadingStage });
+  // console.log("[loading]", { isLoading, loadingStage });
 
   const showSkeleton = isLoading && loadingStage==="generating";
   const showSpinner = isLoading && loadingStage==="analyzing";

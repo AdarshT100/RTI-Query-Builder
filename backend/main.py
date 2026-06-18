@@ -24,7 +24,7 @@ app.add_middleware(
 
 class AnalyzeRequest(BaseModel):
     complaint: str
-    captcha_token: Optional[str] =None
+    captcha_token: str
 
 class GenerateRequest(BaseModel):
     complaint: str
@@ -36,11 +36,7 @@ def _validate_complaint(complaint:str) ->None:
     if len(complaint)>2000:
         raise HTTPException(status_code=400, detail="Complaint exceeds maximum 2000-character limit")
     
-async def _verify_turnstile(token:Optional[str]) ->None:
-    #dev mode pass only
-    if token is None:
-        return
-
+async def _verify_turnstile(token:str) ->None:
     secret = os.getenv("TURNSTILE_SECRET_KEY")
     try:
         async with httpx.AsyncClient() as client:

@@ -12,11 +12,10 @@
     const widgetContainerRef = useRef(null)
     const widgetIdRef = useRef(null)
     
-    const IS_DEV = import.meta.env.DEV
     const remaining = MAX_CHARS - value.length
     const isOverLimit = value.length > MAX_CHARS
     const isEmpty = value.trim().length === 0
-    const isSubmitDisabled = isOverLimit || isEmpty || (!IS_DEV && captchaToken === null)
+    const isSubmitDisabled = isOverLimit || isEmpty || captchaToken == null
 
     useEffect(() => {
         let cleaned = false
@@ -108,6 +107,7 @@
             </button>
         </div>
 
+        {/* TODO: replace data-sitekey with production sitekey from Cloudflare dashboard before deploying */}
         <div ref={widgetContainerRef} />
         </div>
     )
