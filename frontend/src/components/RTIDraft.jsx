@@ -226,7 +226,7 @@
         doc.setFont('times', 'bold');
         doc.text(draft._applicantAddress, leftMargin, currentY);
         doc.setFont('times', 'normal');
-        currentY += lineHeightBody;
+        
     } else {
         // Filled value: rendering wrapped lines in normal weight
         for (const line of addressWrapped) {

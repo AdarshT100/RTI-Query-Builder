@@ -18,8 +18,7 @@
     const isSubmitDisabled = isOverLimit || isEmpty || captchaToken == null
 
     useEffect(() => {
-        let cleaned = false
-
+        
         function renderWidget() {
         if (!window.turnstile || !widgetContainerRef.current) return
         if (widgetRendered) return
@@ -57,7 +56,6 @@
         }
 
         return () => {
-        cleaned = true
         if (interval) clearInterval(interval)
         if (widgetIdRef.current !== null && window.turnstile) {
             window.turnstile.remove(widgetIdRef.current)

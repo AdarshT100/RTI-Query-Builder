@@ -15,7 +15,7 @@
 .complaint-input__hint{
     display: block;
     margin-top: var(--space-xs);
-    font-family: var(-font-body);
+    font-family: var(--font-body);
     font-size: 0.85rem;
     font-weight: 400;
     font-style: italic;
